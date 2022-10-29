@@ -55,7 +55,6 @@ rank <- [num] "Rank in event"
 rank_ordinal <- [chr] "Rank ordinal in event"
 qualified <- [logi] "Did they advance to next round?"
 winner <- [logi] "Did they win?"
-
 ```
 
 Karena dataset masih tergolong sedikit (2005 observasi dengan 18 variabel), maka tidak ada perubahan jenis data `chr` menjadi `factor`, saat ini. Jika diperlukan pada saat pengembangan _shiny apps_, maka akan dilakukan di aplikasi tersebut. 
