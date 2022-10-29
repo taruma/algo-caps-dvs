@@ -1,160 +1,164 @@
 ---
-title: "Briefing DV capstone"
+title: "Briefing DV capstone [Modified]"
 author: "Taruma Sakti Megariansyah"
 date: "`r Sys.Date()`"
 output: 
- html_document:
-   toc: true
-   toc_float: true
+ html_document: 
+   toc: yes
+   toc_float: yes
    highlight: zenburn
+   theme: sandstone
+   css: style.css
    df_print: paged
-   theme: flatly
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-library(tidyverse)
-eurovision <- read_csv('data/eurovision.csv')
+Catatan
+: Segala instruksi asli dari dokumen `brief_*.Rmd` (tulisan dari instruktur) akan disajikan dalam bentuk blok kode:
+
+```
+instruksi/panduan dari dokumen brief_*.Rmd akan disajikan dalam bentuk blok kode seperti ini. 
 ```
 
+# Eksplorasi Dataset {#dataset}
 
-File ini berisi template untuk mejawab pertanyaan 5W+1H saat briefing Capstone Data Visualization sebagai langkah awal sebelum membuat Dashboard. Silakan Bapak/Ibu mengisi jawaban di bawah.
+Dikarenakan Algoritma tidak menyediakan dataset, dan saya harus mencari secara mandiri, jadi harus dieksplorasi dulu dataset yang diperoleh. Dari eksplorasi tersebut setidaknya bisa memiliki gambar awal yang ingin dikerjakan di capstone ini.
 
-File ini tidak akan dinilai namun Bapak/Ibu **WAJIB** disubmit ke dalam classroom pada hari H briefing Capstone Data Visualization.
+Kali ini, saya ingin menggunakan dataset `eurovision` yang saya peroleh dari [Kaggle: Eurovision Song Contest by evangower](https://www.kaggle.com/datasets/evangower/eurovision-song-contest){target="_blank"}. Tidak ada alasan khusus menggunakand dataset ini. Dan saya juga pernah menonton Eurovision, jadinya tidak ada salahnya untuk mengeksplorasi dataset ini. 
 
-# What
+```{r}
+eurovision <- readr::read_csv('data/eurovision.csv', show_col_types = FALSE)
+eurovision
+```
 
+## Deskripsi Kolom
+
+```r
+event <- [chr] "Name of event"
+host_city <- [chr] "City hosting the event"
+year <- [num] "Year of event"
+host_country <- [chr] "Country hosting the event"
+event_url <- [chr] "Link of event"
+section <- [chr] "Round of contest"
+artist <- [chr] "Singer(s) / band name"
+song <- [chr] "Song name"
+artist_url <- [chr] "Artist link"
+image_url <- [chr] "Image link"
+artist_country <- [chr] "Country artist is from"
+country_emoji <- [chr] "Flag emoji"
+running_order <- [num] "Order of singing"
+total_points <- [num] "Points scored in event"
+rank <- [num] "Rank in event"
+rank_ordinal <- [chr] "Rank ordinal in event"
+qualified <- [logi] "Did they advance to next round?"
+winner <- [logi] "Did they win?"
+
+```
+
+Karena dataset masih tergolong sedikit (2005 observasi dengan 18 variabel), maka tidak ada perubahan jenis data `chr` menjadi `factor`, saat ini. Jika diperlukan pada saat pengembangan _shiny apps_, maka akan dilakukan di aplikasi tersebut. 
+
+Dari deskripsi kolom tersebut sudah dapat memberikan gambaran besar mengenai visualisasi seperti apa saja yang disajikan. Contohnya, ada informasi waktu (`year`) yang mampu melihat perkembangan setiap tahunnya (sumbu x sebagai _independent variabel_ jika membuat _line_) atau melihat distribusi _score_ tiap negara atau _rank_ setiap tahunnya. 
+
+---
+
+```
+File ini berisi template untuk mejawab pertanyaan 5W+1H saat briefing Capstone Data Visualization sebagai langkah awal sebelum membuat Dashboard. 
+
+Silakan Bapak/Ibu mengisi jawaban di bawah. File ini tidak akan dinilai namun Bapak/Ibu **WAJIB** disubmit ke dalam classroom pada hari H briefing Capstone Data Visualization.
+```
+
+Catatan
+: Untuk penentuan poin-poin berikut tidak akan bergantung pada rubrik terlebih dahulu. Nanti pada saat pengembangan _shiny apps_, baru akan fokus ke rubrik yang diminta. 
+
+# What {#what}
+
+```
 Tentukan tujuan atau informasi yang ingin ditampilkan dalam dashboard
+```
 
-**Jawab**
+Bagian ini akan menjelaskan secara **umum** mengenai informasi yang mampu disajikan ke dalam dashboard. Dengan catatan, setiap poin setidaknya harus menampilkan visualisasi yang berbeda.
 
+## Jawaban
+
+```
 Tujuan yang ingin dicapai atau informasi yang ingin disampaikan:
+```
 
--   Mengetahui negara manakah yang sering menang? pada 10 tahun terakhir? (Ralat: seluruh data/tahun) -> plot kesatu
+Berikut yang mungkin disampaikan dari data `eurovision` dalam bentuk _shiny apps_:
 
--   Siapa artist yang sering muncul pada 10 tahun terakhir? Apakah selalu berbeda? (Ralat: skip, visualisisasinya serupa dengan yang diatas)
+- Negara manakah yang sering menang di Eurovision Song Contest?
+: Informasi ini bisa disajikan dalam bentuk _bar_ atau _kolom_ dengan sumbu x berupa negaranya, kemudian tinggi _bar/kolom_ merupakan inforasi berapa kali negara tersebut menang. 
+Dapat juga ditambah _reactive_ dengan $n$ tahun terakhir (Misal: $n = 10$, sepuluh tahun terakhir). 
 
--   Negara manakah yang lebih sering lolos ke grand-final? (Ralat: skip, visualisisasinya serupa dengan yang diatas)
+- Statistik Umum Eurovision Song Contest?
+: Bisa menyajikan dalam bentuk _Card_ yang dapat berisikan informasi seperti _Sudah berapa banyak kontes ini diadakan?_, _Sudah berapa negara yang menjadi host acara ini?_, _Artis manakah yang paling sering mewakili negaranya di kontes ini?_.
 
--   Tunjukkan distribusi total poin setiap tahunnya. (Ralat: dynamic, tergantung negaranya) -> plot kedua
+- Bagaimana distribusi skor setiap tahunnya?
+: _Voting system_ di kontes ini bisa berubah setiap tahunnya, sehingga perlu dievaluasi bagaimana pengaruh perubahan sistem tersebut ke hasil akhir (_total points_). 
 
-# Who
+- Menyajikan informasi dataset dengan tampilan menarik
+: Dataset asli dari `eurovision` akan disajikan dalam bentuk visualisasi yang menarik. 
 
+# Who {#who}
+
+```
 Untuk siapa dashboard ini dibuat? Siapa target pembaca dari dashboard ini?
+```
 
-**Jawab**
+## Jawaban
 
-Untuk umum
+Untuk umum dan bagi yang ingin melihat rekap Eurovision setiap tahunnya. 
 
-# Why
+# Why {#why}
 
+```
 Apakah data yang dibuat relevan atau sesuai dengan tujuan? Mengapa?
+```
 
-**Jawab**
+## Jawaban
 
-Data yang diperoleh dari sampai tahun 2022, sehingga mampu melihat trend yang terjadi setiap tahunnya. 
+Iyah, dataset yang diperoleh setidaknya memberikan gambaran dari bab [What](#what). Diusahakan tidak membutuhkan informasi tambahan lagi dari eksternal untuk memperoleh tujuan (tujuan akan diubah untuk menyesuiakan datase). 
 
-# When
+# When {#when}
 
+```
 Apakah data yang digunakan masih *up to date* atau masih relevan dengan kondisi sekarang? Apakah ada informasi tentang tanggal update terakhir dari data tersebut?
+```
 
-**Jawab**
+## Jawaban
 
-Iyah, data sampai tahun 2022. 
+Data yang diperoleh dari tahun 1956 sampai tahun 2022, jadi dataset ini sudah diperbarui sama kontes yang berlangsung tahun ini. Sehingga bisa juga memperoleh informasi yang terkini dan trend selama 10 tahun terakhir.
 
-# How
+# How {#how}
 
+```
 Bagaimana Bapak/Ibu menggunakan visualisasi untuk menjawab tujuan yang telah disebutkan?
 
 Buat plot yang akan dimasukkan ke dalam dashboard. Boleh dalam bentuk `ggplot` maupun `plotly`.
-
-**Jawab**
-
-Plot untuk menjawab tujuan pertama
-
-```{r}
-# your code here
-library(dplyr)
-library(ggplot2)
-eurovision |>
-  # filter(year >= 2013) |>
-  filter(winner & section %in% c("grand-final", "final")) |>
-  group_by(artist_country) |>
-  summarise(winner_count = n()) |>
-  ungroup() |>
-  arrange(desc(winner_count)) |>
-  ggplot(aes(x = reorder(artist_country,winner_count), y = winner_count)) +
-  geom_col() +
-  coord_flip() +
-  theme_minimal()
-    
-  
 ```
 
-Plot kedua
+## Jawaban
 
-```{r}
-# your code here
+Karena jawaban ini langsung ke implementasi kode, akan langsung dialihkan waktu penulisan ini ke pengembangan _shiny apps_. 
 
-eurovision |>
-  # filter(year >= 2013) |>
-  filter(winner & section %in% c("grand-final", "final")) |>
-  group_by(host_country) |>
-  summarise(winner_count = n()) |>
-  ungroup()
+# Where {#where}
 
-eurovision |> 
-  filter(artist_country == country) |>
-  filter(!is.na(total_points)) |> 
-  ggplot(aes(total_points)) +
-    geom_histogram(binwidth = 30)
-  
-  
 ```
-
-Plot ketiga
-
-```{r}
-# your code here
-
-eurovision |> 
-  # filter(rank == 1 & winner) |> 
-  filter(winner & section %in% c("grand-final", "final"))# |>
-
-eurovision |> 
-  filter(!is.na(total_points)) |> 
-  ggplot(aes(x = artist_country, y = total_points)) +
-  geom_boxplot() +
-  coord_flip()
-```
-
-Buat chunk baru apabila ada lebih dari 3 plot.
-
-# Where
-
 Bagaimana desain layout atau tata letak dashboard yang akan dibuat?
+```
 
-**Jawab**
+## Jawaban
 
+```
 Contoh penulisan layout.
+```
 
-Tab atau halaman pertama
+Berikut tab yang akan dilampirkan (tidak berurut, dan ini dilakukan secara spontan saat pengembangan _shiny apps_):
 
--   
-
--   
-
--   
-
--   
-
-Tab atau halaman kedua
-
--   
-
--   
-
--   
+- Tab Dataset: Murni dataset mentah tanpa perubahan apapun. Informasi ini memvisuaslisasikan deskripsi kolom dari [Eksplorasi Dataset](#dataset).
+- Tab Overview: Memberikan gambaran besar utama yang ingin disajikan sebagai halaman utama.
+- Tab Visualisasi: Tab tambahan mengenai visualisasi dataset selain di overview.
+- Tab Notes: Tab yang isinya catatan terkait aplikasi (_source code_, catatan review pelatihan, rubrik, dlsbnya).
