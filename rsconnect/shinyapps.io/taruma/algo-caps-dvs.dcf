@@ -5,10 +5,10 @@ account: taruma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7459641
-bundleId: 6454564
+bundleId: 6455566
 url: https://taruma.shinyapps.io/algo-caps-dvs/
-when: 1667067464.71502
-lastSyncTime: 1667067464.71503
+when: 1667113839.37731
+lastSyncTime: 1667113839.37732
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: _Rmd/brief_taruma.html|_Rmd/brief_taruma.Rmd|data/source.txt

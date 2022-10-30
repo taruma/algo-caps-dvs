@@ -644,6 +644,17 @@
         "xtable"
       ]
     },
+    "shinyEffects": {
+      "Package": "shinyEffects",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e081be31881f84768eeefc8f48ba9ade",
+      "Requirements": [
+        "htmltools",
+        "shiny"
+      ]
+    },
     "shinydashboard": {
       "Package": "shinydashboard",
       "Version": "0.7.2",

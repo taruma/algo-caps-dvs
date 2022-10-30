@@ -54,6 +54,6 @@ myControlBar <- dashboardControlbar(
     )
   ),
   skin = "light",
-  overlay = FALSE,
+  overlay = TRUE,
   width = 300
 )
