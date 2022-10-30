@@ -1,12 +1,3 @@
-# algoscam
-
-require(markdown)
-
-library(DT)
-library(shinyEffects)
-library(ggplot2)
-library(plotly)
-
 ## UI ----
 
 ## HEADER ====
@@ -176,7 +167,7 @@ tab2 <- tabItem(
       collapsible = TRUE,
       collapsed = TRUE,
       icon = icon("trophy", class = "fa"),
-      title = "Negara Pemenang"
+      title = "Informasi Pemenang"
     )
   ),
   ## ROW 4 ====
@@ -191,11 +182,6 @@ tab2 <- tabItem(
 
 ## TAB 3 ====
 
-tab3 <- tabItem(
-  "tabDataset",
-  includeMarkdown("md/datasetInfo.md"),
-  dataTableOutput("datasetTable")
-)
 
 ## TAB 4 ====
 

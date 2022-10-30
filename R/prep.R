@@ -1,8 +1,3 @@
-require(tidyverse)
-require(forcats)
-
-library(dplyr)
-
 eurovision <- readr::read_csv("data/eurovision.csv")
 
 factor_columns <- c(
@@ -49,8 +44,6 @@ year_missing <- winner_summary |>
 total_running_year <- winner_summary |>
   filter(total_winners >= 1) |>
   nrow()
-
-library(ggplot2)
 
 myplot <- function(year_selected, section_selected, top_n = 10) {
   

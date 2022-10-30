@@ -1,7 +1,3 @@
-library(shiny)
-library(shinydashboard)
-library(shinydashboardPlus)
-
 myControlBar <- dashboardControlbar(
   controlbarMenu(
     controlbarItem(
