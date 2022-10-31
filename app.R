@@ -17,11 +17,11 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Overview",
       tabName = "tabOverview",
-      icon = icon("layer-group", class = "fa") # , selected = TRUE
+      icon = icon("layer-group", class = "fa"), selected = TRUE
     ),
     menuItem("Explore",
       tabName = "tabExplore",
-      icon = icon("magnifying-glass-chart", class = "fa"), selected = TRUE
+      icon = icon("magnifying-glass-chart", class = "fa") # , selected = TRUE
     ),
     menuItem("Dataset",
       tabName = "tabDataset",
@@ -42,143 +42,83 @@ sidebar <- dashboardSidebar(
 ## TAB 1 ====
 
 tab1 <- tabItem(
-  "tabOverview"
+  "tabOverview",
+  titlePanel(
+    title = markdown(
+      glue("**_Eurovision Song Contest_** ({year_selected})"),
+    )
+  ),
+  fluidRow(
+    valueBox(
+      winner_info |> pull(artist_country), "Negara Pemenang",
+      icon = icon("trophy"), color = "green", width = 4
+    ),
+    valueBox(
+      winner_info |> pull(artist), "Penyanyi / Musisi",
+      icon = icon("microphone"), color = "aqua", width = 8
+    )
+  ),
+  fluidRow(
+    valueBox(
+      winner_info |> pull(song), "Judul Lagu / Musik",
+      icon = icon("music"), color = "blue", width = 6
+    ),
+    valueBox(
+      winner_info |> pull(total_points), "Total Poin / Skor",
+      icon = icon("star-half-stroke"), color = "teal", width = 6
+    )
+  ),
+  hr(),
+  fluidRow(
+    tabBox(
+      title = markdown("**Visualisasi Kontes**"),
+      id = "overviewTabBox",
+      tabPanel("overviewTab1", "Konten Tab 1"),
+      tabPanel(
+        "Partisipasi Negara",
+        icon = icon("bars-staggered"),
+        fluidPage(
+          br(),
+          sidebarLayout(
+            sidebarPanel(
+              selectInput(
+                "overviewSelectCountry",
+                "Negara yang ditampilkan",
+                choices = list_country,
+                selected = list_country_2022,
+                multiple = TRUE
+              ),
+              sliderInput(
+                "overviewSliderYears",
+                "Periode",
+                min = min(eurovision$year),
+                max = max(eurovision$year),
+                value = c(2013, 2022),
+                step = 1,
+                round = TRUE,
+                ticks = FALSE,
+                sep = ""
+              ),
+              width = 3
+            ),
+            mainPanel(
+              plotlyOutput(
+                "overviewPlotHeatmap"
+              ),
+              width = 9
+            )
+          )
+        )
+      ),
+      selected = "Partisipasi Negara",
+      width = 12
+      # height = 600
+    )
+  ),
 )
 
 ## TAB 2 ====
 
-tab2 <- tabItem(
-  "tabExplore",
-  
-  ## ROW 1 ====
-  fluidRow(
-    valueBox(
-      total_running_year, "Tahun Kontes Telah Berlangsung",
-      icon = icon("calendar-check"), color = "green"
-    ),
-    valueBox(
-      total_participant, "Negara Yang Telah Berpartisipasi",
-      icon = icon("flag"), color = "light-blue"
-    ),
-    valueBox(
-      total_winner_country,
-      "Negara Telah Memenangkan Kontes",
-      icon = icon("earth-europe"), color = "yellow"
-    ),
-  ),
-  ## ROW 2 ====
-  fluidRow(
-    valueBox(
-      paste(
-        eurovision_grandfinal$year |> min(),
-        " - ",
-        eurovision_grandfinal$year |> max()
-      ),
-      "Periode Kontes Berlangsung",
-      icon = icon("calendar-days", class = "fa-solid"), color = "maroon"
-    ),
-    valueBox(
-      year_missing, "Tahun Kontes Ditunda",
-      icon = icon("calendar-minus", class = "fa-solid"),
-      color = "red"
-    ),
-    valueBox(
-      year_multiple_winner, "Tahun Pemenang Ganda",
-      icon = icon("check-double"), color = "navy"
-    ),
-  ),
-  ## ROW 3 ====
-  # PLOT OPTIONS
-  fluidRow(
-    box(
-      title = "Pengaturan",
-      column(
-        3,
-        sliderInput(
-          "exploreSliderYear",
-          "Tahun Kontes",
-          min = min(eurovision$year),
-          max = max(eurovision$year),
-          value = 2022,
-          round = TRUE,
-          step = 1,
-          ticks = FALSE,
-          sep = "",
-          # animate = animationOptions(interval = 300)
-        )
-      ),
-      column(
-        3,
-        selectInput(
-          "exploreSelectSection",
-          "Babak",
-          choices = c("grand-final")
-        )
-      ),
-      column(
-        3,
-        sliderInput(
-          "exploreSliderTopN",
-          "Jumlah Kontestan",
-          min = 1,
-          max = 30,
-          value = 7,
-          round = TRUE,
-          step = 1,
-          ticks = FALSE,
-          sep = ""
-        )
-      ),
-      column(
-        3,
-        radioButtons(
-          "exploreRadioSort",
-          "Urutkan berdasarkan",
-          choices = c(
-            "Penampilan / No. Urut" = FALSE,
-            "Poin / Skor" = TRUE
-          )
-        )
-      ),
-      width = 8
-    ),
-    box(
-      boxPad(
-        color = "olive",
-        descriptionBlock(
-          header = htmlOutput("exploreWinnerCountry"),
-          text = "Negara Pemenang",
-          rightBorder = FALSE
-        ),
-        hr(),
-        descriptionBlock(
-          header = htmlOutput("exploreWinnerArtist"),
-          text = "Penyanyi / Musisi",
-          rightBorder = FALSE
-        ),
-        hr(),
-        descriptionBlock(
-          header = htmlOutput("exploreWinnerSong"),
-          text = "Judul Lagu / Musik",
-          rightBorder = FALSE
-        )
-      ),
-      width = 4,
-      collapsible = TRUE,
-      collapsed = TRUE,
-      icon = icon("trophy", class = "fa"),
-      title = "Informasi Pemenang"
-    )
-  ),
-  ## ROW 4 ====
-  # PLOT OUTPUT
-  fluidRow(
-    box(
-      plotlyOutput("explorePlot1"),
-      width = 12
-    )
-  )
-)
 
 ## TAB 3 ====
 
@@ -195,18 +135,21 @@ body <- dashboardBody(
   setShadow(class = "small-box"),
   setShadow(class = "box"),
   setShadow(class = "pad"),
+  setShadow(class = "nav-tabs-custom"),
   setZoom(class = "description-block"),
   tabItems(
     tab1, tab2, tab3, tab4
   )
 )
 
+# FINAL UI ----
+
 ui <- dashboardPage(
   header,
   sidebar,
   body,
   footer = dashboardFooter(
-    right = markdown("`g00gL3 aj<~>4 K|>k`"),
+    right = markdown("`-> #algoscam <-`"),
     left = tags$small(
       textOutput("footerRubric"), "points"
     )
@@ -231,7 +174,7 @@ server <- function(input, output, session) {
     } else {
       "grand-final"
     }
-    
+
     updateSelectInput(
       session, "exploreSelectSection",
       choices = section_choices,
@@ -271,8 +214,17 @@ server <- function(input, output, session) {
       myplot(
         input$exploreSliderYear,
         input$exploreSelectSection,
-        input$exploreSliderTopN
-      )
+        input$exploreSliderTopN,
+        input$exploreRadioSort |> as.logical()
+      ),
+      tooltip = "text"
+    )
+  )
+
+  output$exploreTitlePlot <- renderText(
+    paste(
+      "Poin Tiap Negara Tahun",
+      input$exploreSliderYear
     )
   )
 
@@ -296,6 +248,14 @@ server <- function(input, output, session) {
 
     sum(
       rubric_input, rubric_tab, rubric_render, rubric_deploy, rubric_ui
+    )
+  })
+  
+  output$overviewPlotHeatmap <- renderPlotly({
+    plotheatmap(
+      input$overviewSelectCountry,
+      input$overviewSliderYears[1],
+      input$overviewSliderYears[2]
     )
   })
 }
