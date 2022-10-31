@@ -193,43 +193,67 @@ plotheatmap <- function(selected_country, year_start,
     )
 }
 
+# PLOT DISTRIBUSI ----
 
+plothist <- function(...) {
+  selection <- c(...)
 
-#
-# eurovision_xtabs_winner <- xtabs(
-#   winner ~ artist_country + year, eurovision_grandfinal
-# ) |>
-#   as.data.frame() |>
-#   mutate(
-#     year = as.numeric(year |> levels())[year],
-#   )
-#
-# eurovision_xtabs_artist <- eurovision_xtabs_winner |>
-#   left_join(eurovision,
-#     by = c("year", "artist_country")
-#   ) %>%
-#   mutate_at(
-#     c('artist', 'song'), ~replace_na(.,"")
-#   ) |>
-#   mutate(
-#     tooltip = glue(
-#       "{artist_country}
-#       <i>{song}</i>
-#       <b>{artist}</b><extra></extra>
-#       "
-#     )
-#   )
-#
-# score_winner <- eurovision_xtabs_final$qualified +
-#   eurovision_xtabs_winner$Freq + 100
+  data <- eurovision_grandfinal |>
+    filter(artist_country %in% selection)
 
-#
-# ggplot(
-#   eurovision_xtabs_final, aes(x = year, y = artist_country, text = tooltip)
-# ) +
-#   geom_tile(aes(fill = Freq), show.legend = FALSE) +
-#   theme_bw() +
-#   # scale_fill_viridis_b() -> ewq
-#   scale_fill_distiller(direction = 1) -> ewq
-#
-# ggplotly(ewq, tooltip = "text") |> layout(hovermode = "x unified")
+  fig <- data |>
+    ggplot(aes(x = total_points, fill = artist_country)) +
+    geom_histogram(
+      alpha = 0.7, position = "identity",
+      binwidth = 10,
+      na.rm = TRUE
+    ) +
+    theme_bw() +
+    labs(
+      y = "Frekuensi",
+      x = "Total Poin",
+      fill = "Negara",
+      title = "Perbandingan Distribusi Total Poin Setiap Negara"
+    )
+
+  ggplotly(fig) |> layout(
+    hovermode = FALSE,
+    xaxis = list(
+      showline = TRUE
+    )
+  )
+}
+
+# PLOT JOURNEY ----
+
+plotjourney <- function(selection, year_start, year_end) {
+  data <- eurovision_grandfinal |>
+    filter(
+      artist_country %in% selection,
+      year >= year_start & year <= year_end
+    )
+
+  data <- data |>
+    mutate(
+      tooltip = glue(
+        "#{running_order} {artist_country}
+        {year} {rank_ordinal}
+        <i>{song}</i>
+        <b>{artist}</b>
+        "
+      )
+    )
+
+  data |> ggplot(
+    aes(x = year, y = total_points, color = artist_country)
+  ) +
+    geom_line(na.rm = TRUE, alpha = 0.7, lwd = 0.8) +
+    # geom_point(na.rm = TRUE, alpha = 0.5) +
+    theme_bw() +
+    labs(
+      x = "Tahun",
+      y = "Total Poin",
+      color = "Negara",
+      title = "Perjalanan Negara selama kontes ESC"
+    )
+}

@@ -39,96 +39,10 @@ sidebar <- dashboardSidebar(
   collapsed = TRUE
 )
 
-## TAB 1 ====
-
-tab1 <- tabItem(
-  "tabOverview",
-  titlePanel(
-    title = markdown(
-      glue("**_Eurovision Song Contest_** ({year_selected})"),
-    )
-  ),
-  fluidRow(
-    valueBox(
-      winner_info |> pull(artist_country), "Negara Pemenang",
-      icon = icon("trophy"), color = "green", width = 4
-    ),
-    valueBox(
-      winner_info |> pull(artist), "Penyanyi / Musisi",
-      icon = icon("microphone"), color = "aqua", width = 8
-    )
-  ),
-  fluidRow(
-    valueBox(
-      winner_info |> pull(song), "Judul Lagu / Musik",
-      icon = icon("music"), color = "blue", width = 6
-    ),
-    valueBox(
-      winner_info |> pull(total_points), "Total Poin / Skor",
-      icon = icon("star-half-stroke"), color = "teal", width = 6
-    )
-  ),
-  hr(),
-  fluidRow(
-    tabBox(
-      title = markdown("**Visualisasi Kontes**"),
-      id = "overviewTabBox",
-      tabPanel("overviewTab1", "Konten Tab 1"),
-      tabPanel(
-        "Partisipasi Negara",
-        icon = icon("bars-staggered"),
-        fluidPage(
-          br(),
-          sidebarLayout(
-            sidebarPanel(
-              selectInput(
-                "overviewSelectCountry",
-                "Negara yang ditampilkan",
-                choices = list_country,
-                selected = list_country_2022,
-                multiple = TRUE
-              ),
-              sliderInput(
-                "overviewSliderYears",
-                "Periode",
-                min = min(eurovision$year),
-                max = max(eurovision$year),
-                value = c(2013, 2022),
-                step = 1,
-                round = TRUE,
-                ticks = FALSE,
-                sep = ""
-              ),
-              width = 3
-            ),
-            mainPanel(
-              plotlyOutput(
-                "overviewPlotHeatmap"
-              ),
-              width = 9
-            )
-          )
-        )
-      ),
-      selected = "Partisipasi Negara",
-      width = 12
-      # height = 600
-    )
-  ),
-)
-
-## TAB 2 ====
-
-
-## TAB 3 ====
-
-
-## TAB 4 ====
-
 tab4 <- tabItem(
-  "tabNotes"
+  "tabNotes",
+  includeMarkdown("md/notes.md"),
 )
-
 
 body <- dashboardBody(
   includeCSS("style.css"),
@@ -250,7 +164,7 @@ server <- function(input, output, session) {
       rubric_input, rubric_tab, rubric_render, rubric_deploy, rubric_ui
     )
   })
-  
+
   output$overviewPlotHeatmap <- renderPlotly({
     plotheatmap(
       input$overviewSelectCountry,
@@ -258,6 +172,23 @@ server <- function(input, output, session) {
       input$overviewSliderYears[2]
     )
   })
+
+  output$overviewPlotDist <- renderPlotly({
+    plothist(
+      input$overviewDistCountry1,
+      input$overviewDistCountry2,
+      input$overviewDistCountry3,
+      input$overviewDistCountry4
+    )
+  })
+
+  output$overviewPlotJourney <- renderPlot(
+    plotjourney(
+      input$overviewJourneyCountry,
+      input$overviewJourneyYears[1],
+      input$overviewJourneyYears[2]
+    )
+  )
 }
 
 shinyApp(ui = ui, server = server)

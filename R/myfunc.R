@@ -1,3 +1,5 @@
-rubricscore <- function(rubric){
-  rubric |> as.integer() |> sum()
+rubricscore <- function(rubric) {
+  rubric |>
+    as.integer() |>
+    sum()
 }

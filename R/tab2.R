@@ -1,10 +1,9 @@
 tab2 <- tabItem(
   "tabExplore",
-  
   titlePanel(
     markdown("**Eksplorasi Dataset**")
   ),
-  
+
   ## ROW 1 ====
   fluidRow(
     valueBox(
