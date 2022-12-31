@@ -32,7 +32,7 @@ sidebar <- dashboardSidebar(
       icon = icon("clipboard", class = "fa")
     ),
     menuItem("Source Code",
-      href = "https://github.com/taruma/algo-caps-dvs",
+      href = "https://github.com/taruma/eurovision-song-contest",
       icon = icon("github", class = "fa")
     )
   ),
@@ -62,15 +62,8 @@ ui <- dashboardPage(
   header,
   sidebar,
   body,
-  footer = dashboardFooter(
-    right = markdown("`-> #algoscam <-`"),
-    left = tags$small(
-      textOutput("footerRubric"), "points"
-    )
-  ),
   skin = "blue-light",
-  title = "Eurovision Song Contest Dashboard",
-  controlbar = myControlBar
+  title = "Eurovision Song Contest Dashboard"
 )
 
 # SERVER ----
@@ -152,18 +145,6 @@ server <- function(input, output, session) {
     filter = "top",
     selection = "single"
   )
-
-  output$footerRubric <- renderText({
-    rubric_input <- input$rubricInput |> rubricscore()
-    rubric_tab <- input$rubricTab |> rubricscore()
-    rubric_render <- input$rubricRender |> rubricscore()
-    rubric_deploy <- input$rubricDeploy |> rubricscore()
-    rubric_ui <- input$rubricUI |> rubricscore()
-
-    sum(
-      rubric_input, rubric_tab, rubric_render, rubric_deploy, rubric_ui
-    )
-  })
 
   output$overviewPlotHeatmap <- renderPlotly({
     plotheatmap(

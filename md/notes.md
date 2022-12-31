@@ -1,21 +1,11 @@
 ## Notes
 
-Referensi yang digunakan antara lain:
+`<< Informasi dibawah ini dibangkitkan menggunakan chatGPT (2022-12-31) >>`
 
-- <https://fontawesome.com/search>
-- <https://rstudio.github.io/shinydashboard/>
-- <https://rinterface.github.io/shinydashboardPlus/>
-- <https://shiny.rstudio.com/articles/>
-- <https://shiny.rstudio.com/reference/shiny/1.7.0/>
+Eurovision Song Contest adalah kompetisi musik tahunan yang diselenggarakan oleh Uni Eropa dan diikuti oleh negara-negara anggota Uni Eropa serta negara-negara lain yang tergabung dalam Uni Eropa Radio Televisi (EBU). Kompetisi ini pertama kali diadakan pada tahun 1956 dan telah menjadi acara televisi terbesar di Eropa sejak saat itu. Setiap tahun, negara-negara anggota EBU mengirimkan sebuah lagu dan penyanyi untuk bersaing di kompetisi ini. Peserta akan menampilkan lagu mereka di depan jury dan penonton di seluruh Eropa, dan pemenang akan dipilih berdasarkan jumlah suara yang terkumpul dari masing-masing negara.
 
-Pelatihannya? kontribusinya sangat besar sekali. Sangat tidak terbayangkan. Berikut momen-momen menyenangkan yang saya rasakan.
+Pemenang Eurovision Song Contest setiap tahunnya akan mendapatkan hak untuk menjadi tuan rumah kompetisi tahun berikutnya. Negara yang telah memenangkan kompetisi ini sebelumnya adalah Swedia, Israel, Irlandia, dan lainnya. Runner-up atau negara yang meraih peringkat kedua di kompetisi ini juga sering kali menjadi perbincangan, seperti Malta, Yunani, dan Portugal.
 
-- Sebelumnya saya tidak tahu soal google, jika saya tidak ikut pelatihan ini, mungkin saya gak tahu istilah _googling_. 
-- Di pelatihan ini sangat bagus untuk meningkatkan rasa penasaran kita, karena materinya tidak disampaikan seluruhnya. Jadi, dengan ilmu _ngegoogling_ (yang diberitahu sama instruktur) membuat kita bisa buat proyek secanggih ini.
-- Selain itu, kita dilatih untuk menyalin kode sehingga kemampuan koding kita semakin terasah. Bohong, kalau logika atau teori itu penting, yang penting itu seberapa cepat kita ngetik. 
-- Materi pelatihannya juga top-tier banget. Beda dengan buku [R for data science](https://r4ds.hadley.nz/), dimana semuanya dijelaskan. Buku tersebut tidak membangun _curiosity_ kita kalau kita disuapin semua konsep dan pemahamannya.
-- Saya juga salut dengan pembahasan mengenai shiny yang lalu, kita tidak perlu tahu soal app.R, karena itu terlalu mudah. Kalau kemudahan, nanti kita tidak mengeksplorasi lebih jauh.
+Lagu-lagu yang mengagumkan di Eurovision Song Contest juga sering menjadi perbincangan setelah acara ini berlangsung. Beberapa lagu yang telah menjadi favorit di kalangan penonton dan juri adalah "Waterloo" milik ABBA dari Swedia, "Euphoria" milik Loreen dari Swedia, dan "Heroes" milik Måns Zelmerlöw dari Swedia. Lagu-lagu ini telah meraih popularitas yang luar biasa di seluruh Eropa dan di seluruh dunia setelah mereka memenangkan kompetisi ini.
 
-Saya baru tahu mahalnya dimana, ternyata mahalnya itu membangun _curiosity_ kita dalam mengerjakan proyek sendiri. Memang super sekali!?
-
-<small>what a scam! 🐕</small> 
+Acara Eurovision Song Contest merupakan acara yang sangat populer di Eropa dan telah menjadi salah satu acara televisi terbesar di dunia. Selain itu, acara ini juga sering dianggap sebagai wadah untuk berkompetisi secara sehat antar negara, serta menyatukan negara-negara Eropa melalui musik. Setiap tahun, penonton dan penggemar di seluruh dunia menunggu dengan penuh antusiasme untuk melihat siapa yang akan menjadi pemenang dan lagu apa yang akan menjadi favorit di tahun tersebut.
