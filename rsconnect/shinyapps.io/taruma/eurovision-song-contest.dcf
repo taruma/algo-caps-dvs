@@ -1,0 +1,13 @@
+name: eurovision-song-contest
+title: eurovision-song-contest
+username:
+account: taruma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7960197
+bundleId: 6685871
+url: https://taruma.shinyapps.io/eurovision-song-contest/
+when: 1672486010.39324
+lastSyncTime: 1672486010.39324
+asMultiple: FALSE
+asStatic: FALSE
